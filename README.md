@@ -29,6 +29,11 @@ pip install -r requirements.txt
 python app.py
 ```
 
+若需要開啟除錯模式（僅供開發使用）：
+```bash
+FLASK_DEBUG=true python app.py
+```
+
 3. 開啟瀏覽器訪問：
 ```
 http://localhost:5000

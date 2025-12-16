@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create TODO - Java TODO App</title>
+    <link rel="stylesheet" th:href="@{/css/tailwind-custom.css}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <span>📝</span>
+                <span>Java TODO App</span>
+            </a>
+            <div>
+                <a href="/">My Tasks</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="max-w-2xl">
+            <!-- Card -->
+            <div class="card">
+                <!-- Header -->
+                <div class="card-header bg-primary">
+                    <h2 style="color: white; display: flex; align-items: center;">
+                        <svg style="width: 1.75rem; height: 1.75rem; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Create New Task
+                    </h2>
+                </div>
+
+                <!-- Form Body -->
+                <div class="card-body">
+                    <form th:action="@{/create}" th:object="${todo}" method="post">
+                        <!-- Validation Errors -->
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger mb-4">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div>
+                                <h4>Please fix the following errors:</h4>
+                                <ul style="list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Error message</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Title Field -->
+                        <div class="form-group">
+                            <label for="title">
+                                Title <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="title" 
+                                   th:field="*{title}" 
+                                   class="form-control"
+                                   placeholder="Enter task title"
+                                   required>
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Title error</p>
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" 
+                                      th:field="*{description}" 
+                                      rows="4"
+                                      class="form-control"
+                                      placeholder="Enter task description (optional)"></textarea>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Description error</p>
+                        </div>
+
+                        <!-- Completed Checkbox -->
+                        <div class="form-check mb-6">
+                            <input type="checkbox" 
+                                   th:field="*{completed}" 
+                                   id="completed">
+                            <label for="completed">Mark as completed</label>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-4 pt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Create Task
+                            </button>
+                            <a href="/" class="btn btn-secondary">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                                </svg>
+                                Back to List
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 - Java TODO App - A Simple TODO Management System with Tailwind CSS</p>
+        </div>
+    </footer>
+</body>
+</html>
